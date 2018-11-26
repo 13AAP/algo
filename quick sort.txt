@@ -1,0 +1,66 @@
+#include<stdio.h>
+#include<time.h>
+int c=0;
+void swap(int*a,int *b)
+{
+int t=*a;
+*a=*b;
+*b=t;
+}
+int partition(int arr[],int low,int high)
+{
+int k;
+int pivot =arr[high];;
+int i=(low-1);
+for(int j=low;j<=high-1;j++)
+{
+c++;
+if (arr[j]<=pivot)
+{
+i++;
+swap(&arr[i],&arr[j]);
+}
+}
+swap(&arr[i+1],&arr[high]);
+for(k=low;k<=high;k++)
+printf("%d ",arr[k]);
+printf("\n");
+return(i+1);
+}
+void quicksort(int arr[],int low,int high)
+{
+if(low<high)
+{
+int pi=partition(arr,low,high);
+quicksort(arr,low,pi-1);
+quicksort(arr,pi+1,high);
+}
+}
+void printArray(int arr[],int size)
+{
+int i;
+for(i=0;i<size;i++)
+{
+printf("%d ",arr[i]);
+}
+}
+void main()
+{
+int i,n,arr[50];
+printf("\n Enter the no.of the element:");
+scanf("%d",&n);
+printf("\n Enter the elements of the array:");
+for(i=0;i<n;i++)
+{
+scanf("%d",&arr[i]);
+}
+clock_t t1=clock();
+quicksort(arr,0,n-1);
+clock_t t2=clock();
+printf("Sorted Array:");
+printArray(arr,n);
+printf("\n the no.of comparison is %d:",c);
+double d;
+d=((double)(t2-t1))/CLOCKS_PER_SEC;
+printf("The time complexity %lf:",d);
+} 

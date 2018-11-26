@@ -1,0 +1,70 @@
+#include<stdio.h>
+int s[20][20];
+int MatrixChainOrder(int p[], int i, int j)
+{
+    if(i == j)
+        return 0;
+    int k;
+    int min = 1000000;
+    int count;
+    for (k = i; k <j; k++)
+    {
+        count = MatrixChainOrder(p, i, k) +
+                MatrixChainOrder(p, k+1, j) +
+                p[i-1]*p[k]*p[j];
+       if (count < min)
+            min = count;
+    }
+   return min;
+}
+
+
+void main()
+{
+int n;
+long int m[20][20];
+long int q;
+int i,j,k,p[20];
+printf("Enter number of matrix");
+scanf("%d",&n);
+printf("Enter dimesion");
+for(i=0;i<=n;i++)
+{
+scanf("%d",&p[i]);
+}
+for(i=1;i<=n;i++)
+ {
+   for(j=i;j<=n;j++)
+   {
+	m[i][i]=0;
+	m[i][j]=1000000;
+	s[i][j]=0;
+}
+}
+for(i=n;i>0;i--)
+ {
+   for(j=i;j<=n;j++)
+    {
+     if(i==j)
+       m[i][j]=0;
+     else
+       {
+        for(k=i;k<j;k++)
+        {
+         q=m[i][k]+m[k+1][j]+p[i-1]*p[k]*p[j];
+         if(q<m[i][j])
+          {
+            m[i][j]=q;
+            s[i][j]=k;
+          }
+         }
+        }
+      }
+    }
+printf("\nCost Matrix M:\n");
+for(i=1;i<=n;i++)
+ for(j=i;j<=n;j++)
+  printf("m[%d][%d]: %ld\n",i,j,m[i][j]);
+printf("\nMinimum number of multiplications is : %d ",
+                          MatrixChainOrder(p, 1, n));
+}

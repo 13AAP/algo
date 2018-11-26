@@ -1,0 +1,67 @@
+#include<stdio.h>
+void mergesort(int[],int,int,int);
+void merge(int[],int,int);
+void main()
+    {
+        int arr[50],i,size;
+        printf("Enter total number of elements:\t");
+        scanf("%d",&size);
+        printf("\nEnter the elements:\t");
+           for(i=0;i<size;i++)
+              scanf("%d",&arr[i]);
+        merge(arr,0,(size-1));
+        printf("\nAfter sorting elements of array will be:\t");
+           for(i=0;i<size;i++)
+              printf("\t%d",arr[i]);
+              printf("\n");
+    }
+void merge(int arr[],int low,int high)
+   {
+        int mid;
+        if(low < high)
+           {
+                mid=(low+high)/2;
+                merge(arr,low,mid);
+                merge(arr,mid+1,high);
+                mergesort(arr,low,mid,high);
+           }
+   }
+void mergesort(int arr[],int low,int mid,int high)
+    {
+        int a,b,i,j,k,r[50],l[60];
+        a=(mid-low+1);
+        b=(high-mid);
+           for(i=0;i<a;i++)
+              l[i]=arr[low+i];
+           for(j=0;j<b;j++)
+             r[j]=arr[mid+j+1];
+        i=0;
+        j=0;
+        k=low;
+          while((i<a) && (j<b))
+            {
+                if(l[i]<=r[j])
+                 {
+                    arr[k]=l[i];
+                    i++;
+                 }
+                else
+                 {
+                    arr[k]=r[j];
+                    j++;
+                 }
+              k++;
+            }
+         while(i<a)
+            {
+                 arr[k]=l[i];
+                 k++;
+                 i++;
+            }
+         while(j<b)
+            {
+                arr[k]=r[j];
+                k++;
+                j++;
+            }
+    }
